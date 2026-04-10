@@ -15,6 +15,8 @@ app.use(express.urlencoded({ extended: true, limit: '10mb' }))
 app.use('/api/auth', require('./src/routes/authRoutes'))
 app.use('/api/users', require('./src/routes/userRoutes'))
 app.use('/api/posts', require('./src/routes/postRoutes'))
+app.use('/api/likes', require('./src/routes/likeRoutes'))
+app.use('/api/comments', require('./src/routes/commentRoutes'))
 
 
 
