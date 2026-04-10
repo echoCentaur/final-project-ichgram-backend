@@ -1,7 +1,17 @@
 const router = require('express').Router()
+const multer = require('multer')
+const authMiddleware = require('../middlewares/authMiddleware')
+const { getProfile, updateProfile, getMe } = require('../controllers/userController')
 
-router.get('/:id', (req, res) => {
-    res.json({ message: 'Профиль пользователя работает!' })
-})
+const upload = multer({ storage: multer.memoryStorage() })
+
+
+router.get('/me', authMiddleware, getMe)
+
+
+router.get('/:id', authMiddleware, getProfile)
+
+
+router.put('/update', authMiddleware, upload.single('profile_image'), updateProfile)
 
 module.exports = router
