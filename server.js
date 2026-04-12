@@ -19,6 +19,7 @@ app.use('/api/likes', require('./src/routes/likeRoutes'))
 app.use('/api/comments', require('./src/routes/commentRoutes'))
 app.use('/api/search', require('./src/routes/searchRoutes'))
 app.use('/api/follow', require('./src/routes/followRoutes'))
+app.use('/api/ai', require('./src/routes/aiRoutes'))
 
 
 
