@@ -5,10 +5,11 @@ const { register, login } = require('../controllers/authController')
 
 require('../config/passport')
 
+const FRONTEND_URL = process.env.FRONTEND_URL || 'http://localhost:5173'
+
 router.post('/register', register)
 router.post('/login', login)
 
-// Google OAuth маршруты
 router.get('/google',
     passport.authenticate('google', {
         scope: ['profile', 'email'],
@@ -18,19 +19,16 @@ router.get('/google',
 
 router.get('/google/callback',
     passport.authenticate('google', {
-        failureRedirect: 'http://localhost:5173/login',
+        failureRedirect: `${FRONTEND_URL}/login`,
         session: false
     }),
     (req, res) => {
-        // Создаём JWT токен
         const token = jwt.sign(
             { id: req.user._id },
             process.env.JWT_SECRET,
             { expiresIn: '7d' }
         )
-
-        // Редиректим на фронт с токеном
-        res.redirect(`http://localhost:5173/auth/google/success?token=${token}`)
+        res.redirect(`${FRONTEND_URL}/auth/google/success?token=${token}`)
     }
 )
 
