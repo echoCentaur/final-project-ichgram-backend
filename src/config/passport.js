@@ -9,19 +9,19 @@ passport.use(new GoogleStrategy({
     callbackURL: '/api/auth/google/callback'
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        // Ищем пользователя по googleId
+        
         let user = await User.findOne({ googleId: profile.id })
 
         if (!user) {
-            // Проверяем есть ли пользователь с таким email
+            
             user = await User.findOne({ email: profile.emails[0].value })
 
             if (user) {
-                // Привязываем Google к существующему аккаунту
+               
                 user.googleId = profile.id
                 await user.save()
             } else {
-                // Создаём нового пользователя
+                
                 user = await User.create({
                     googleId: profile.id,
                     email: profile.emails[0].value,
